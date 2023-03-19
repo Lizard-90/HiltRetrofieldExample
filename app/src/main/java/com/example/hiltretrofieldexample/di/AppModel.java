@@ -19,8 +19,8 @@ public class AppModel {
 
     @Singleton
     @Provides
-    public RetrofitServiceInterface getRetroRerviceInteface(Retrofit retrofit2){
-        return retrofit2.create(RetrofitServiceInterface.class);
+    public RetrofitServiceInterface getRetroRerviceInteface(Retrofit retrofit){
+        return retrofit.create(RetrofitServiceInterface.class);
     }
 
     @Singleton
