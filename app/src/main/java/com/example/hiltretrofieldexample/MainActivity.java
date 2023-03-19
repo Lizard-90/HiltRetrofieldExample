@@ -1,12 +1,20 @@
 package com.example.hiltretrofieldexample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.hiltretrofieldexample.adapter.RecyclerViewAdapter;
+import com.example.hiltretrofieldexample.models.RecyclerData;
+import com.example.hiltretrofieldexample.viewmodel.MainActivityViewModel;
+
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -21,8 +29,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initRecyclerView();
-        inivtViewModel();
+        initViewModel();
     }
+
+    private void initViewModel() {
+        MainActivityViewModel viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        viewModel.getLiveData().observe(this, new Observer<List<RecyclerData>>() {
+            @Override
+            public void onChanged(List<RecyclerData> recyclerData) {
+                if(recyclerData != null){
+                    Log.d("DATA", "onChanged: " + recyclerData.toString());
+                    recyclerViewAdapter.setListItems(recyclerData);
+                    recyclerViewAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(MainActivity.this, "error in getting data", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        viewModel.makeApiCall();
+    }
+
+
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerview);

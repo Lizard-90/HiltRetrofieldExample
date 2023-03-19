@@ -30,7 +30,7 @@ public class MainActivityViewModel extends ViewModel {
         return liveData;
     }
 
-    public void mainCall(){
+    public void makeApiCall(){
         RetroRepository retroRepository = new RetroRepository(retrofitServiceInterface);
         retroRepository.makeApiCall("hilt", liveData);
     }

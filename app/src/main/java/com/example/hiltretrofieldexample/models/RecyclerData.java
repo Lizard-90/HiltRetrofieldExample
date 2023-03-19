@@ -1,6 +1,15 @@
 package com.example.hiltretrofieldexample.models;
 
 public class RecyclerData {
+    @Override
+    public String toString() {
+        return "RecyclerData{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", owner=" + owner +
+                '}';
+    }
+
     private String name;
     private String description;
     private Owner owner;
