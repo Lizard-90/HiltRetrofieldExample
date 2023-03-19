@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.hiltretrofieldexample.models.RecyclerData;
 import com.example.hiltretrofieldexample.network.RetroRepository;
-import com.example.hiltretrofieldexample.network.RetrofitServiceInterface;
+import com.example.hiltretrofieldexample.network.RetroServiceInterface;
 
 import java.util.List;
 
@@ -15,23 +15,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class MainActivityViewModel extends ViewModel {
-
     MutableLiveData<List<RecyclerData>> liveData;
 
     @Inject
-    RetrofitServiceInterface retrofitServiceInterface;
+    RetroServiceInterface retroServiceInterface;
 
     @Inject
     public MainActivityViewModel() {
-        this.liveData = new MutableLiveData<>();
+        liveData = new MutableLiveData();
     }
 
     public MutableLiveData<List<RecyclerData>> getLiveData() {
         return liveData;
     }
 
-    public void makeApiCall(){
-        RetroRepository retroRepository = new RetroRepository(retrofitServiceInterface);
-        retroRepository.makeApiCall("hilt", liveData);
+    public void makeApiCall() {
+        RetroRepository retroRepository = new RetroRepository(retroServiceInterface);
+        retroRepository.makeAPICall("hilt", liveData);
     }
 }

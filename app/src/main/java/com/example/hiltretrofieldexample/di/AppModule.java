@@ -1,6 +1,7 @@
 package com.example.hiltretrofieldexample.di;
 
-import com.example.hiltretrofieldexample.network.RetrofitServiceInterface;
+
+import com.example.hiltretrofieldexample.network.RetroServiceInterface;
 
 import javax.inject.Singleton;
 
@@ -13,23 +14,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class AppModel {
-    String baseURL = "https://api.github.com/search/"; // repositorie?q=network
+public class AppModule {
 
+    String baseURL = "https://api.github.com/search/";//repositories?q=hilt
 
     @Singleton
     @Provides
-    public RetrofitServiceInterface getRetroRerviceInteface(Retrofit retrofit){
-        return retrofit.create(RetrofitServiceInterface.class);
+    public RetroServiceInterface getRetroServiceInterface(Retrofit retrofit) {
+        return retrofit.create(RetroServiceInterface.class);
     }
 
     @Singleton
     @Provides
-    public Retrofit getRetroInstance(){
+    public Retrofit getRetroInstance() {
         return new Retrofit.Builder()
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
-
 }

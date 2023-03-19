@@ -35,31 +35,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tvName.setText(listItems.get(position).getName());
         holder.tvDesc.setText(listItems.get(position).getDescription());
         Glide.with(holder.imageView)
-                .load(listItems.get(position).getOwner().getAvatar_URL())
+                .load(listItems.get(position).getOwner().getAvatar_url())
                 .into(holder.imageView);
-
-
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         if(listItems == null)
             return 0;
         else
             return listItems.size();
     }
 
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
+    public class MyViewHolder extends  RecyclerView.ViewHolder{
         ImageView imageView;
         TextView tvName;
         TextView tvDesc;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
+
             tvName = itemView.findViewById(R.id.tvName);
             tvDesc = itemView.findViewById(R.id.tvDesc);
+
+
         }
     }
 }

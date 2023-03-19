@@ -2,7 +2,7 @@ package com.example.hiltretrofieldexample.network;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.hiltretrofieldexample.models.RecycleList;
+import com.example.hiltretrofieldexample.models.RecyclerList;
 import com.example.hiltretrofieldexample.models.RecyclerData;
 
 import java.util.List;
@@ -12,30 +12,31 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RetroRepository {
-    private RetrofitServiceInterface retrofitServiceInterface;
 
-    public RetroRepository(RetrofitServiceInterface retrofitServiceInterface) {
-        this.retrofitServiceInterface = retrofitServiceInterface;
+    private RetroServiceInterface retroServiceInterface;
+
+    public RetroRepository(RetroServiceInterface retroServiceInterface) {
+        this.retroServiceInterface = retroServiceInterface;
     }
 
-    public void makeApiCall(String query, MutableLiveData<List<RecyclerData>> mutableLiveData){
-        Call<RecycleList> call = retrofitServiceInterface.getDataFromAPI(query);
-        call.enqueue(new Callback<RecycleList>() {
+    public void makeAPICall(String query, MutableLiveData<List<RecyclerData>> liveData) {
+        Call<RecyclerList> call  = retroServiceInterface.getDataFromGitHubApi(query);
+        call.enqueue(new Callback<RecyclerList>() {
             @Override
-            public void onResponse(Call<RecycleList> call, Response<RecycleList> response) {
-                // send to view
-                if(response.isSuccessful()){
-                    mutableLiveData.postValue(response.body().getItem());
-                }else {
-                    mutableLiveData.postValue(null);
+            public void onResponse(Call<RecyclerList> call, Response<RecyclerList> response) {
+                if(response.isSuccessful()) {
+                    liveData.postValue(response.body().getItems());
+                } else {
+                    liveData.postValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<RecycleList> call, Throwable t) {
-                    //exception reaction
-                mutableLiveData.postValue(null);
+            public void onFailure(Call<RecyclerList> call, Throwable t) {
+                liveData.postValue(null);
             }
         });
+
+
     }
 }
